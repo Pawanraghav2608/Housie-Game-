@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Housie Table</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Playfair+Display:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="topbar" aria-label="Game header">
+        <div>
+          <p class="eyebrow">Housie night</p>
+          <h1>One table. Private cards. Fair calls.</h1>
+        </div>
+
+        <div class="caller-board" aria-live="polite">
+          <span class="caller-label">Current number</span>
+          <strong id="currentNumber">--</strong>
+          <span id="callerStatus">Waiting to start</span>
+        </div>
+      </section>
+
+      <section class="layout">
+        <section class="panel" id="setupPanel">
+          <p class="status-pill">Game room</p>
+          <h2>Join the Housie table.</h2>
+          <p class="body-copy">
+            The first player creates the game. Other players open the same website link
+            and join with their names. Each player only sees their own card.
+          </p>
+
+          <div class="setup-grid">
+            <label>
+              <span>Your name</span>
+              <input id="playerName" type="text" maxlength="18" placeholder="Player name" />
+            </label>
+
+            <label>
+              <span>Players</span>
+              <select id="playerCount">
+                <option value="2">2 players</option>
+                <option value="3">3 players</option>
+                <option value="4" selected>4 players</option>
+                <option value="5">5 players</option>
+                <option value="6">6 players</option>
+                <option value="7">7 players</option>
+                <option value="8">8 players</option>
+                <option value="9">9 players</option>
+                <option value="10">10 players</option>
+                <option value="11">11 players</option>
+                <option value="12">12 players</option>
+                <option value="13">13 players</option>
+                <option value="14">14 players</option>
+                <option value="15">15 players</option>
+                <option value="16">16 players</option>
+                <option value="17">17 players</option>
+                <option value="18">18 players</option>
+                <option value="19">19 players</option>
+                <option value="20">20 players</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="action-row">
+            <button class="primary-action" id="createGame" type="button">Create Game</button>
+            <button class="secondary-action" id="joinGame" type="button">Join Game</button>
+          </div>
+        </section>
+
+        <section class="panel game-panel" id="gamePanel" hidden>
+          <div class="game-header">
+            <div>
+              <p class="status-pill" id="playerBadge">Player</p>
+              <h2 id="cardTitle">Your Housie card</h2>
+            </div>
+            <div class="action-row compact">
+              <button class="secondary-action icon-action" id="soundToggle" type="button">Sound On</button>
+              <button class="secondary-action" id="startGame" type="button">Start</button>
+              <button class="primary-action" id="drawNumber" type="button">Call Number</button>
+            </div>
+          </div>
+
+          <div class="ai-host" aria-live="polite">
+            <span>AI Host</span>
+            <p id="aiLine">RJ Housie is warming up the mic.</p>
+          </div>
+
+          <div class="ticket" id="ticket" aria-label="Your Housie card"></div>
+
+          <div class="footer-row">
+            <div class="called-list">
+              <span>Numbers called history</span>
+              <div id="calledNumbers"></div>
+            </div>
+            <button class="claim-action" id="claimWinner" type="button">Claim Winner</button>
+          </div>
+        </section>
+
+        <aside class="side-panel">
+          <section class="panel players-panel">
+            <h3>Players</h3>
+            <div id="playersList" class="players-list"></div>
+          </section>
+
+          <section class="panel stats-panel">
+            <h3>Most frequent numbers</h3>
+            <div id="frequentNumbers" class="mini-list"></div>
+          </section>
+
+          <section class="panel stats-panel">
+            <h3>Leaderboard</h3>
+            <div id="leaderboard" class="mini-list"></div>
+          </section>
+
+          <section class="panel stats-panel">
+            <h3>Saved game history</h3>
+            <div id="gameHistory" class="mini-list"></div>
+          </section>
+
+          <section class="rules-card" aria-label="Rules">
+            <div class="rules-header">
+              <span>Rules</span>
+              <span class="mini-badge">Read first</span>
+            </div>
+            <ol>
+              <li>Each player receives one private Housie card.</li>
+              <li>Numbers are called from 1 to 90 and never repeat.</li>
+              <li>The called number is displayed for 2.6 seconds.</li>
+              <li>Players may mark only numbers that have been called.</li>
+              <li>A winner is confirmed only if every card number was called and marked.</li>
+            </ol>
+            <label class="read-check">
+              <input id="rulesRead" type="checkbox" />
+              <span>I have read the rules</span>
+            </label>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="winner-modal" id="winnerModal" hidden>
+      <div>
+        <p class="status-pill">Winner confirmed</p>
+        <h2 id="winnerText"></h2>
+        <p>The server checked the winner card against all called numbers.</p>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

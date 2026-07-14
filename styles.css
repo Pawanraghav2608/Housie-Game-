@@ -1,0 +1,529 @@
+:root {
+  --cream: #f8f5f2;
+  --beige: #d9cab3;
+  --sage: #a7bfa3;
+  --olive: #5e6b5c;
+  --charcoal: #2f2f2f;
+  --line: rgb(47 47 47 / 16%);
+  --shadow: 0 24px 70px rgb(47 47 47 / 14%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--charcoal);
+  font-family: "Nunito", system-ui, sans-serif;
+  background:
+    radial-gradient(circle at top left, rgb(167 191 163 / 48%), transparent 34rem),
+    linear-gradient(135deg, var(--cream), var(--beige));
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+}
+
+.shell {
+  width: min(1240px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 34px 0;
+}
+
+.topbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 26px;
+}
+
+.eyebrow,
+.caller-label,
+#callerStatus,
+.called-list > span,
+label > span,
+.ai-host span {
+  color: var(--olive);
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  letter-spacing: 0.13em;
+}
+
+h1,
+h2 {
+  margin: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  line-height: 1.03;
+}
+
+h1 {
+  max-width: 760px;
+  font-size: clamp(2.45rem, 6vw, 5rem);
+}
+
+h2 {
+  font-size: clamp(1.8rem, 4vw, 3.15rem);
+}
+
+h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: 18px;
+  align-items: start;
+}
+
+.panel,
+.rules-card,
+.caller-board,
+.winner-modal > div {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgb(248 245 242 / 90%);
+  box-shadow: var(--shadow);
+}
+
+.panel {
+  padding: 24px;
+}
+
+.caller-board {
+  display: grid;
+  min-width: 250px;
+  padding: 16px 20px;
+  text-align: center;
+}
+
+#currentNumber {
+  color: var(--charcoal);
+  font-size: 4.4rem;
+  line-height: 1;
+}
+
+#currentNumber.pop {
+  animation: numberPop 0.45s ease;
+}
+
+.body-copy {
+  max-width: 650px;
+  color: var(--charcoal);
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.status-pill,
+.mini-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.status-pill {
+  margin: 0 0 16px;
+  color: var(--cream);
+  background: var(--olive);
+}
+
+.setup-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+}
+
+label {
+  display: grid;
+  gap: 7px;
+}
+
+input,
+select {
+  min-height: 48px;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 14px;
+  color: var(--charcoal);
+  background: var(--cream);
+  font-weight: 800;
+}
+
+.action-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.action-row.compact {
+  margin-top: 0;
+}
+
+.primary-action,
+.secondary-action,
+.claim-action {
+  min-height: 48px;
+  padding: 0 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.primary-action {
+  color: var(--cream);
+  background: var(--charcoal);
+  box-shadow: 0 14px 28px rgb(47 47 47 / 18%);
+}
+
+.secondary-action {
+  color: var(--charcoal);
+  background: var(--sage);
+}
+
+.claim-action {
+  color: var(--cream);
+  background: var(--olive);
+}
+
+.icon-action {
+  min-width: 112px;
+}
+
+.primary-action,
+.secondary-action,
+.claim-action,
+.cell.number {
+  position: relative;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.primary-action:hover,
+.secondary-action:hover,
+.claim-action:hover {
+  filter: brightness(1.03);
+  transform: translateY(-1px);
+}
+
+.primary-action:active,
+.secondary-action:active,
+.claim-action:active,
+.cell.number:active {
+  transform: scale(0.96);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  color: rgb(47 47 47 / 48%);
+  background: rgb(47 47 47 / 11%);
+  box-shadow: none;
+}
+
+.game-panel {
+  display: grid;
+  gap: 18px;
+}
+
+.game-header,
+.footer-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.ai-host {
+  display: grid;
+  gap: 8px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  background: rgb(167 191 163 / 28%);
+}
+
+.ai-host p {
+  margin: 0;
+  color: var(--charcoal);
+  font-size: 1.05rem;
+  font-weight: 900;
+  line-height: 1.45;
+}
+
+.ticket {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(42px, 1fr));
+  gap: 6px;
+}
+
+.cell {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1 / 0.82;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  color: var(--charcoal);
+  background: var(--cream);
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  font-weight: 900;
+}
+
+.cell.number {
+  cursor: pointer;
+}
+
+.cell.number:hover {
+  outline: 3px solid rgb(167 191 163 / 72%);
+}
+
+.cell.marked {
+  color: var(--cream);
+  background: var(--olive);
+}
+
+.cell.recent {
+  outline: 3px solid var(--charcoal);
+}
+
+.cell.blank {
+  background:
+    linear-gradient(135deg, rgb(47 47 47 / 5%) 25%, transparent 25%) 0 0 / 10px 10px,
+    var(--beige);
+}
+
+.called-list {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+#calledNumbers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.called-chip {
+  display: inline-grid;
+  place-items: center;
+  min-width: 34px;
+  min-height: 30px;
+  border-radius: 999px;
+  color: var(--cream);
+  background: var(--olive);
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+.side-panel {
+  display: grid;
+  gap: 18px;
+}
+
+.players-list,
+.mini-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.player-row,
+.mini-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 11px 12px;
+  border-radius: 8px;
+  background: rgb(167 191 163 / 30%);
+  font-weight: 900;
+}
+
+.player-row small,
+.mini-row small {
+  color: var(--olive);
+  font-weight: 900;
+}
+
+.progress-bar {
+  width: 76px;
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgb(47 47 47 / 12%);
+}
+
+.progress-bar span {
+  display: block;
+  height: 100%;
+  background: var(--olive);
+}
+
+.rules-card {
+  padding: 18px;
+}
+
+.rules-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-weight: 900;
+  font-size: 1.08rem;
+}
+
+.mini-badge {
+  color: var(--cream);
+  background: var(--olive);
+}
+
+.rules-card ol {
+  margin: 14px 0 16px;
+  padding-left: 20px;
+  line-height: 1.45;
+}
+
+.rules-card li + li {
+  margin-top: 8px;
+}
+
+.read-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 12px;
+  border-radius: 8px;
+  background: rgb(167 191 163 / 42%);
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.read-check input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--olive);
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  z-index: 5;
+  max-width: min(520px, calc(100% - 28px));
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: var(--cream);
+  background: var(--charcoal);
+  box-shadow: var(--shadow);
+  font-weight: 900;
+  opacity: 0;
+  transform: translate(-50%, 20px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.winner-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 6;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgb(47 47 47 / 28%);
+}
+
+.winner-modal > div {
+  width: min(540px, 100%);
+  padding: 28px;
+  text-align: center;
+}
+
+.winner-modal p:last-child {
+  margin-bottom: 0;
+  font-weight: 800;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@keyframes numberPop {
+  0% {
+    transform: scale(0.82);
+  }
+  70% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 980px) {
+  .topbar,
+  .game-header,
+  .footer-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .caller-board {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .shell {
+    width: min(100% - 20px, 1240px);
+    padding-top: 20px;
+  }
+
+  .panel,
+  .rules-card {
+    padding: 16px;
+  }
+
+  .setup-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ticket {
+    gap: 3px;
+    grid-template-columns: repeat(9, minmax(28px, 1fr));
+  }
+
+  .cell {
+    border-radius: 5px;
+    font-size: 0.82rem;
+  }
+}

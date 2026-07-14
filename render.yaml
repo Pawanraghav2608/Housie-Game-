@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: housie-game
+    env: node
+    plan: free
+    buildCommand: ""
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HISTORY_FILE
+        value: /tmp/game-history.json
